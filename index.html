@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amrou Amira – Data Engineering et Vision par ordinateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F7FA;--panel:#FFFFFF;--ink:#12202F;--muted:#506172;--line:#D5DDE6;--grid:#E3E9F0;
+  --teal:#0B7A80;--amber:#E58A1F;--link:#0B6E75;--wall:#12202F;--shelf:#CBD5E0;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0E1620;--panel:#142030;--ink:#E8EEF4;--muted:#9BAABA;--line:#283849;--grid:#16222F;--teal:#4CC3C9;--amber:#F2A24A;--link:#6FD0D5;--wall:#E8EEF4;--shelf:#2A3B4E}
+}
+:root[data-theme="dark"]{--bg:#0E1620;--panel:#142030;--ink:#E8EEF4;--muted:#9BAABA;--line:#283849;--grid:#16222F;--teal:#4CC3C9;--amber:#F2A24A;--link:#6FD0D5;--wall:#E8EEF4;--shelf:#2A3B4E}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 "IBM Plex Sans",system-ui,sans-serif}
+a{color:var(--link)}
+a:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Familjen Grotesk",system-ui,sans-serif;margin:0;line-height:1.1}
+.bar{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;height:56px}
+.bar strong{font-family:"Familjen Grotesk",sans-serif;font-size:1.1rem}
+.bar nav{display:flex;gap:22px;overflow-x:auto}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:.95rem;white-space:nowrap}
+.bar nav a:hover{color:var(--ink)}
+.hero{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;padding-top:56px;padding-bottom:56px}
+h1{font-size:clamp(2.6rem,6.5vw,4.2rem);font-weight:700;letter-spacing:-.025em}
+.role{font-family:"Familjen Grotesk",sans-serif;font-size:1.3rem;font-weight:500;color:var(--teal);margin:14px 0 18px}
+.hero p{color:var(--muted);margin:0 0 26px;max-width:30em}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:10px 20px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:500;border-radius:3px;background:var(--bg)}
+.btn.main{background:var(--ink);color:var(--bg)}
+figure{margin:0}
+.plan{background:var(--panel);border:1px solid var(--line);padding:10px}
+.plan svg{display:block;width:100%;height:auto}
+figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin-top:8px}
+.legend{display:flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:70px;height:7px;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:4px}
+.heat{opacity:0;animation:fade 1.2s ease-out .2s forwards}
+.trace{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s ease-in-out forwards}
+.t1{animation-delay:.6s}.t2{animation-delay:1s}.t3{animation-delay:1.4s}.t4{animation-delay:1.8s}
+.dot{fill:var(--amber);stroke:var(--panel);stroke-width:2;opacity:0;animation:fade .4s ease-out forwards}
+.d1{animation-delay:2.9s}.d2{animation-delay:3.3s}.d3{animation-delay:3.7s}.d4{animation-delay:4.1s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.heat,.dot{opacity:1;animation:none}.trace{stroke-dashoffset:0;animation:none}}
+section{padding:60px 0}
+section+section{border-top:1px solid var(--line)}
+h2{font-size:1.7rem;margin-bottom:30px}
+.item{display:grid;grid-template-columns:180px 1fr;gap:10px 32px;margin-bottom:28px}
+.item .when{color:var(--muted);font-size:.92rem;padding-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);padding:24px 26px;position:relative}
+.card::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:5px;background:linear-gradient(var(--teal),var(--amber))}
+.card h3{font-size:1.25rem;margin-bottom:2px}
+.card .org{color:var(--muted);margin:0 0 12px}
+.card ul{margin:0 0 14px;padding-left:20px}
+.card li{margin-bottom:4px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:0!important;margin:0!important;list-style:none}
+.tags li{border:1px solid var(--line);padding:1px 10px;font-size:.85rem;border-radius:3px;margin:0!important}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px}
+.skills h3{font-size:1.1rem;margin-bottom:6px}
+.skills p{margin:0;color:var(--muted)}
+footer{padding:60px 0 80px;border-top:1px solid var(--line);background:var(--panel)}
+footer p{color:var(--muted);margin:0 0 14px}
+footer .links a{margin-right:22px;font-weight:500}
+@media (max-width:760px){.hero .wrap{grid-template-columns:1fr;padding-top:40px;padding-bottom:40px}.item{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap">
+  <strong>Amrou Amira</strong>
+  <nav><a href="#experience">Expérience</a><a href="#projets">Projets</a><a href="#formation">Formation</a><a href="#competences">Compétences</a><a href="#contact">Contact</a></nav>
+</div></div>
+
+<main>
+<div class="hero"><div class="wrap">
+  <div>
+    <h1>Amrou Amira</h1>
+    <div class="role">Data Engineering et vision par ordinateur</div>
+    <p>Étudiant en dernière année à Enet’Com Sfax, à la recherche d’un PFE à partir de janvier 2027. Je transforme des flux de données et des images de caméras en décisions exploitables.</p>
+    <div class="btns"><a class="btn main" href="#contact">Me contacter</a><a class="btn" href="#projets">Voir mes projets</a></div>
+  </div>
+  <figure>
+    <div class="plan">
+      <svg viewBox="0 0 480 360" role="img" aria-label="Plan de magasin avec zones d’affluence et trajectoires de clients">
+        <defs>
+          <radialGradient id="hA"><stop offset="0" stop-color="#E58A1F" stop-opacity=".75"/><stop offset=".55" stop-color="#E58A1F" stop-opacity=".25"/><stop offset="1" stop-color="#E58A1F" stop-opacity="0"/></radialGradient>
+          <radialGradient id="hT"><stop offset="0" stop-color="#0B7A80" stop-opacity=".6"/><stop offset=".6" stop-color="#0B7A80" stop-opacity=".18"/><stop offset="1" stop-color="#0B7A80" stop-opacity="0"/></radialGradient>
+        </defs>
+        <g fill="var(--shelf)">
+          <rect x="80" y="80" width="120" height="22"/><rect x="80" y="130" width="120" height="22"/><rect x="80" y="180" width="120" height="22"/>
+          <rect x="280" y="80" width="120" height="22"/><rect x="280" y="130" width="120" height="22"/><rect x="280" y="180" width="120" height="22"/>
+          <rect x="300" y="285" width="100" height="26"/>
+        </g>
+        <g class="heat">
+          <circle cx="240" cy="150" r="95" fill="url(#hA)"/>
+          <circle cx="345" cy="268" r="70" fill="url(#hA)"/>
+          <circle cx="150" cy="240" r="65" fill="url(#hT)"/>
+          <circle cx="405" cy="150" r="55" fill="url(#hT)"/>
+        </g>
+        <path d="M30 30H450V330H150M90 330H30Z" fill="none" stroke="var(--wall)" stroke-width="4" stroke-linejoin="round"/>
+        <path class="trace t1" pathLength="1" d="M120 330V240H240V60"/>
+        <path class="trace t2" pathLength="1" d="M105 330V215H55V112H225"/>
+        <path class="trace t3" pathLength="1" d="M135 330V250H345V268"/>
+        <path class="trace t4" pathLength="1" d="M120 330V240H240V158H425V215H345V268"/>
+        <circle class="dot d1" cx="240" cy="60" r="6"/><circle class="dot d2" cx="225" cy="112" r="6"/><circle class="dot d3" cx="345" cy="268" r="6"/><circle class="dot d4" cx="345" cy="268" r="6"/>
+        <text x="94" y="322" font-size="11" fill="var(--muted)" font-family="IBM Plex Sans,sans-serif">Entrée</text>
+        <text x="312" y="302" font-size="11" fill="var(--muted)" font-family="IBM Plex Sans,sans-serif">Caisses</text>
+      </svg>
+    </div>
+    <figcaption><span>Illustration : trajectoires clients et zones d’affluence</span><span class="legend">faible<i></i>forte</span></figcaption>
+  </figure>
+</div></div>
+
+<section id="experience"><div class="wrap">
+  <h2>Expérience</h2>
+  <div class="item">
+    <div class="when">Stage</div>
+    <div class="card">
+      <h3>Développeur Computer Vision et Full-Stack</h3>
+      <p class="org">VisShop AI, startup</p>
+      <ul>
+        <li>Plateforme d’analyse retail : suivi des clients, cartes de chaleur et visualisation des trajectoires sur le plan du magasin.</li>
+        <li>Classification du genre avec un ResNet18 (PyTorch), traitement du déséquilibre de classes.</li>
+        <li>Calibration par homographie pour aligner les positions détectées sur le plan.</li>
+        <li>Backend Django et interface React/TypeScript.</li>
+      </ul>
+      <ul class="tags"><li>YOLO</li><li>PyTorch</li><li>DTW + DBSCAN</li><li>Django</li><li>React</li><li>TypeScript</li></ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="projets"><div class="wrap">
+  <h2>Projets</h2>
+  <div class="item">
+    <div class="when">Projet personnel</div>
+    <div class="card">
+      <h3>Real-Time E-commerce Data Engineering Platform</h3>
+      <p class="org">Plateforme de données batch et temps réel</p>
+      <ul>
+        <li>Architecture médaillon (Bronze, Silver, Gold) en Parquet.</li>
+        <li>Traitement batch avec PySpark, orchestration avec Airflow, stockage dans PostgreSQL.</li>
+        <li>Ingestion en temps réel avec Kafka et Spark Structured Streaming.</li>
+      </ul>
+      <ul class="tags"><li>Python</li><li>PySpark</li><li>Airflow</li><li>Kafka</li><li>PostgreSQL</li><li>Parquet</li></ul>
+      <p style="margin:14px 0 0"><a href="#">Code source sur GitHub</a></p>
+    </div>
+  </div>
+</div></section>
+
+<section id="formation"><div class="wrap">
+  <h2>Formation</h2>
+  <div class="item">
+    <div class="when">Dernière année</div>
+    <div class="card">
+      <h3>Data Engineering et Systèmes de Décision</h3>
+      <p class="org" style="margin:0">Enet’Com Sfax</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="competences"><div class="wrap">
+  <h2>Compétences</h2>
+  <div class="skills">
+    <div><h3>Data engineering</h3><p>PySpark, Airflow, Kafka, PostgreSQL, Parquet</p></div>
+    <div><h3>Machine learning et vision</h3><p>PyTorch, YOLO, ResNet, DBSCAN, DTW</p></div>
+    <div><h3>Développement web</h3><p>Django, React, TypeScript, Git/GitHub</p></div>
+  </div>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <h2>Contact</h2>
+  <p>Disponible pour un PFE en data engineering ou en vision par ordinateur à partir de janvier 2027.</p>
+  <div class="links"><a href="mailto:votre.email@exemple.com">votre.email@exemple.com</a><a href="#">LinkedIn</a><a href="#">GitHub</a></div>
+</div></footer>
+</body>
+</html>
